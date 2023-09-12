@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@400;600&family=Roboto:wght@300;400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sono:wght@300&display=swap");
+
+:root {
+  --primary-dark: #1d1d20;
+  --secondary-dark: #2a2a2d;
+  --primary-light: #f1f5f9;
+  --secondary-light: #cbd5e1;
+}
+
+@layer base {
+  body {
+    @apply font-[Roboto] font-normal bg-[var(--primary-light)] dark:bg-[var(--primary-dark)];
+  }
+  h1,
+  h2 {
+    @apply font-[Raleway] text-xl font-semibold;
+  }
+  input {
+    @apply mb-6 py-3 px-4 block w-full bg-white border border-gray-200 hover:bg-gray-100 rounded-md text-xs md:text-sm font-medium text-[var(--primary-dark)] dark:text-[var(--secondary-light)] dark:bg-[var(--secondary-dark)] dark:border-zinc-800 dark:hover:bg-zinc-800;
+  }
+}
