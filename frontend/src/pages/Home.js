@@ -2,20 +2,21 @@ import { useState, useEffect } from 'react'
 
 import ReminderDetails from '../components/ReminderDetails'
 import ReminderForm from '../components/ReminderForm'
+import { useRemindersContext } from '../hooks/useRemindersContext'
 
 const Home = () => {
-  const [reminders, setReminders] = useState(null)
+  const { reminders, dispatch } = useRemindersContext()
 
   useEffect(() => {
     const fetchReminders = async () => {
       const response = await fetch("/api/reminders")
       const json = await response.json()
 
-      if (response.ok) setReminders(json)
+      if (response.ok) dispatch({ type: 'SET_REMINDERS', payload: json })
     }
 
     fetchReminders()
-  }, [])
+  }, [dispatch])
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 md:gap-3 lg:gap-7">

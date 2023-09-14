@@ -2,8 +2,10 @@ import { useState } from 'react'
 import 'flatpickr/dist/themes/dark.css'
 import Flatpickr from 'react-flatpickr'
 import { FaRegCalendarAlt } from 'react-icons/fa'
+import { useRemindersContext } from '../hooks/useRemindersContext'
 
 const ReminderForm = () => {
+    const { dispatch } = useRemindersContext()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [date, setDate] = useState('')
@@ -33,7 +35,7 @@ const ReminderForm = () => {
             setDescription('')
             setDate('')
             setError(null)
-
+            dispatch({ type: 'CREATE_REMINDER', payload: json })
         }
     }
 
