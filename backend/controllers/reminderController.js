@@ -10,7 +10,7 @@ const getReminders = async (req, res) => {
 const getReminder = async (req, res) => {
     const { id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.statu(404).json({ error: 'No such reminder' })
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ error: 'No such reminder' })
 
     const reminder = await Reminder.findById(id)
 
@@ -21,6 +21,12 @@ const getReminder = async (req, res) => {
 
 const createReminder = async (req, res) => {
     const { title, date, description } = req.body
+
+    let emptyFields = []
+
+    if (!title) emptyFields.push('title')
+    if (!date) emptyFields.push('date')
+    if (emptyFields.length > 0) return res.status(400).json({ error: 'Please fill in al the required fields.', emptyFields })
 
     try {
         const reminder = await Reminder.create({ title, date, description })
@@ -34,7 +40,7 @@ const createReminder = async (req, res) => {
 const deleteReminder = async (req, res) => {
     const { id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.statu(404).json({ error: 'No such reminder' })
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ error: 'No such reminder' })
 
     const reminder = await Reminder.findOneAndDelete({ _id: id })
 
@@ -46,9 +52,9 @@ const deleteReminder = async (req, res) => {
 const updateReminder = async (req, res) => {
     const { id } = req.params
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.statu(404).json({ error: 'No such reminder' })
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ error: 'No such reminder' })
 
-    const reminder = await Reminder.findOneAndUpdate({ _id: id }, { ...req.body })
+    const reminder = await Reminder.findOneAndUpdate({ _id: id }, { ...req.body }, { new: true })
 
     if (!reminder) return res.status(404).json({ error: 'No such reminder' })
 

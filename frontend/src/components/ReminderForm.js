@@ -10,6 +10,7 @@ const ReminderForm = () => {
     const [description, setDescription] = useState('')
     const [date, setDate] = useState('')
     const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState([])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -28,6 +29,7 @@ const ReminderForm = () => {
 
         if (!response.ok) {
             setError(json.error)
+            setEmptyFields(json.emptyFields)
         }
 
         if (response.ok) {
@@ -35,6 +37,7 @@ const ReminderForm = () => {
             setDescription('')
             setDate('')
             setError(null)
+            setEmptyFields([])
             dispatch({ type: 'CREATE_REMINDER', payload: json })
         }
     }
@@ -46,6 +49,7 @@ const ReminderForm = () => {
                     <label htmlFor="title-input" className="block text-xl font-semibold mb-2 text-[var(--primary-dark)] dark:text-[var(--primary-light)]">Title</label>
                 </div>
                 <input
+                    className={emptyFields.includes('title') ? 'error' : ''}
                     type="text"
                     id="title-input"
                     placeholder="Please enter a title..."
@@ -90,7 +94,7 @@ const ReminderForm = () => {
                 <button className="mb-4 px-8 py-3 text-sm md:text-base font-semibold border rounded border-[var(--primary-dark)] text-[var(--primary-dark)] hover:bg-[#d8dce0] dark:border-[var(--primary-light)] dark:text-[var(--primary-light)] dark:hover:bg-[var(--secondary-dark)]">Add reminder</button>
                 {error &&
                     <div className="error">
-                        <div className="flex items-center text-l justify-between mt-6 p-3 border-l-8 sm:py-8 dark:border-red-700  dark:bg-[var(--secondary-dark)] dark:text-[var(--primary-light)]">
+                        <div className="flex items-center text-l justify-between mt-6 p-3 border-l-8 sm:py-8 border-red-500 bg-white text-[var(--primary-dark)] dark:border-red-700  dark:bg-[var(--secondary-dark)] dark:text-[var(--primary-light)]">
                             <span>{error}</span>
                         </div>
                     </div>}
