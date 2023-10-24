@@ -52,7 +52,7 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
         <div>
             <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
                 <div className="relative w-full max-w-3xl my-6 mx-6">
-                    <div className="dark:border rounded-lg shadow-lg relative flex flex-col w-full bg-white dark:bg-[var(--primary-dark)] dark:border-zinc-800 outline-none focus:outline-none">
+                    <div className="dark:border rounded-lg shadow-lg relative flex flex-col w-full bg-white dark:bg-[var(--secondary-dark)] dark:border-zinc-800 outline-none focus:outline-none">
                         <div className="flex justify-between items-center text-2xl text-[var(--primary-dark)] dark:text-[var(--primary-light)] p-5 border-b border-solid border-[var(--secondary-light)]">
                             <h5 className="font-semibold">
                                 Update Reminder
@@ -116,12 +116,12 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
                                 <button
                                     type="button"
                                     onClick={() => setOpenReminderUpdate(false)}
-                                    className="border rounded border-[var(--primary-dark)] text-[var(--primary-dark)] hover:bg-[#d8dce0] dark:border-[var(--primary-light)] dark:text-[var(--primary-light)] dark:hover:bg-[var(--secondary-dark)] background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    className="border rounded border-[var(--primary-dark)] text-[var(--primary-dark)] hover:bg-[#d8dce0] dark:border-[var(--secondary-dark)] dark:text-[var(--primary-light)] dark:hover:bg-[var(--primary-dark)] background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 >
                                     Close
                                 </button>
                                 <button
-                                    className="border rounded bg-[var(--primary-dark)] border-[var(--primary-dark)] text-white hover:bg-[var(--secondary-dark)] dark:border-[var(--primary-light)] dark:text-[var(--primary-light)] dark:hover:bg-[var(--secondary-dark)] background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    className="border rounded bg-[var(--primary-dark)] border-[var(--primary-dark)] text-white hover:bg-[var(--secondary-dark)] dark:bg-[var(--primary-dark)] dark:border-[var(--primary-dark)] dark:text-[var(--primary-light)] dark:hover:bg-[var(--primary-dark)] background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 >
                                     Save Changes
                                 </button>
@@ -136,7 +136,7 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
                     </div>
                 </div>
             </div>
-            <div className="opacity-25 fixed inset-0 z-40 bg-black dark:bg-white"></div>
+            <div className="opacity-25 fixed inset-0 z-40 bg-black dark:bg-gray-400"></div>
         </div >
     )
 }

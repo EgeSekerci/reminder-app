@@ -14,14 +14,13 @@
 
 @layer base {
   body {
-    @apply !font-[Roboto] !font-normal bg-[var(--primary-light)] dark:bg-[var(--primary-dark)];
+    @apply !font-[Roboto] !font-normal bg-[var(--primary-light)] transition-all dark:bg-[var(--primary-dark)];
   }
-  h1,
-  h2 {
+  h1 {
     @apply font-[Raleway] text-xl font-semibold;
   }
   input {
-    @apply mb-6 py-3 px-4 block w-full bg-white border border-gray-200 hover:bg-gray-100 rounded-md text-xs md:text-sm font-medium text-[var(--primary-dark)] dark:text-[var(--secondary-light)] dark:bg-[var(--secondary-dark)] dark:border-zinc-800 dark:hover:bg-zinc-800;
+    @apply mb-6 py-3 px-4 block w-full transition-all bg-gray-100 border border-gray-200 hover:bg-white focus:bg-white rounded-md text-xs md:text-sm font-medium text-[var(--primary-dark)] dark:text-[var(--secondary-light)] dark:bg-[var(--primary-dark)] dark:border-zinc-900 dark:hover:bg-[var(--secondary-dark)];
   }
 }
 

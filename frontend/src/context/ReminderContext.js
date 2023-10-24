@@ -1,4 +1,4 @@
-import { createContext, useReducer } from 'react'
+import { createContext, useReducer, useEffect } from 'react'
 
 export const RemindersContext = createContext()
 
@@ -38,6 +38,17 @@ export const remindersReducer = (state, action) => {
 
 export const RemindersContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(remindersReducer, { reminders: null, selectedReminder: null })
+
+    useEffect(() => {
+        const fetchReminders = async () => {
+            const response = await fetch("/api/reminders")
+            const json = await response.json()
+
+            if (response.ok) dispatch({ type: 'SET_REMINDERS', payload: json })
+        }
+
+        fetchReminders()
+    }, [dispatch])
 
     return (
         <RemindersContext.Provider value={{ ...state, dispatch }}>

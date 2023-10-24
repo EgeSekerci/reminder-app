@@ -1,22 +1,10 @@
-import { useEffect } from 'react'
-
 import ReminderDetails from '../components/ReminderDetails'
 import ReminderForm from '../components/ReminderForm'
+import Calendar from '../components/Calendar'
 import { useRemindersContext } from '../hooks/useRemindersContext'
 
 const Home = () => {
-  const { reminders, dispatch } = useRemindersContext()
-
-  useEffect(() => {
-    const fetchReminders = async () => {
-      const response = await fetch("/api/reminders")
-      const json = await response.json()
-
-      if (response.ok) dispatch({ type: 'SET_REMINDERS', payload: json })
-    }
-
-    fetchReminders()
-  }, [dispatch])
+  const { reminders } = useRemindersContext()
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-5 md:gap-3 lg:gap-7">
@@ -27,6 +15,7 @@ const Home = () => {
       </div>
       <div className="order-1 md:order-2 md:col-start-4 md:col-end-6">
         <ReminderForm />
+        <Calendar />
       </div>
     </div>
   )

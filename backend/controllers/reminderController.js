@@ -2,7 +2,7 @@ const Reminder = require('../models/reminderModel')
 const mongoose = require('mongoose')
 
 const getReminders = async (req, res) => {
-    const reminders = await Reminder.find({}).sort({ createdAt: -1 })
+    const reminders = await Reminder.find({}).sort({ date: 1 })
 
     res.status(200).json(reminders)
 }
