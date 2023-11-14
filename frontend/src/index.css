@@ -19,11 +19,32 @@
   h1 {
     @apply font-[Raleway] text-xl font-semibold;
   }
-  input {
-    @apply mb-6 py-3 px-4 block w-full transition-all bg-gray-100 border border-gray-200 hover:bg-white focus:bg-white rounded-md text-xs md:text-sm font-medium text-[var(--primary-dark)] dark:text-[var(--secondary-light)] dark:bg-[var(--primary-dark)] dark:border-zinc-900 dark:hover:bg-[var(--secondary-dark)];
+  input,
+  .date-time {
+    @apply mb-6 py-3 px-4 block !w-full transition-all bg-white placeholder-shown:bg-gray-100 border border-gray-200 hover:border-[var(--primary-dark)] outline-orange-500 focus:ring-0 hover:bg-white focus:bg-white rounded-md text-xs md:text-sm font-medium text-[var(--primary-dark)] dark:text-[var(--secondary-light)] dark:bg-[var(--primary-dark)] placeholder-shown:dark:bg-[var(--secondary-dark)] dark:hover:bg-[var(--primary-dark)] dark:border-zinc-900;
   }
 }
 
 .error {
   @apply border-red-500 dark:border-red-700;
+}
+.MuiInputBase-input {
+  @apply !py-3 !px-4;
+}
+.MuiIconButton-root > .MuiSvgIcon-root {
+  @apply !text-[var(--secondary-dark)] dark:!text-[var(--secondary-light)];
+}
+.MuiDateCalendar-root,
+.MuiTimeClock-root {
+  @apply bg-white  dark:bg-[var(--secondary-dark)];
+}
+.MuiClock-squareMask {
+  @apply bg-[var(--primary-light)]  dark:bg-[var(--primary-dark)];
+}
+.MuiTypography-root,
+.MuiPickersDay-root,
+.MuiPickersCalendarHeader-label,
+.MuiPickersYear-yearButton,
+.MuiClock-wrapper > .MuiClockNumber-root {
+  @apply !text-[var(--primary-dark)] dark:!text-[var(--primary-light)];
 }

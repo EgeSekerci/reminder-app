@@ -27,7 +27,7 @@ const ReminderDetails = ({ reminder }) => {
                 </div>
                 <div className="font-normal text-[var(--secondary-dark)] dark:text-[var(--secondary-light)]">
                     <p className="text-sm">{reminder.description}</p>
-                    <p className="mt-2 text-sm">Event date: {format(new Date(parseJSON(reminder.date)), 'MMM dd yyyy h:mm aa', { addSuffix: true })}</p>
+                    <p className="mt-2 text-sm">Event date: {format(new Date(parseJSON(reminder.date)), 'MMM dd yyyy, h:mm aa', { addSuffix: true })}</p>
                     <p className="pt-4 mb-0 pb-0 text-[12px] font-[Sono]">Created: <span className="text-[12px]">{formatDistanceToNow(new Date(parseJSON(reminder.createdAt)), { addSuffix: true })}</span></p>
                 </div>
             </button>

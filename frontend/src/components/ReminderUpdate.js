@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 import { useRemindersContext } from '../hooks/useRemindersContext'
-import 'flatpickr/dist/themes/dark.css'
-import Flatpickr from 'react-flatpickr'
-import { FaRegCalendarAlt } from 'react-icons/fa'
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import { parseJSON } from 'date-fns'
 
 const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
     const { dispatch, selectedReminder } = useRemindersContext()
-    const [title, setTitle] = useState(reminderId.title)
-    const [description, setDescription] = useState(reminderId.description)
-    const [date, setDate] = useState(reminderId.date)
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [date, setDate] = useState(parseJSON(new Date()))
     const [error, setError] = useState(null)
 
     useEffect(() => {
@@ -20,6 +20,14 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
         }
         fetchReminder()
     }, [reminderId])
+
+    useEffect(() => {
+        if (selectedReminder) {
+            setTitle(selectedReminder.title)
+            setDescription(selectedReminder.description)
+            setDate(selectedReminder.date)
+        }
+    }, [selectedReminder])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -41,11 +49,15 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
 
         if (response.ok) {
             dispatch({ type: 'UPDATE_REMINDER', payload: json })
-            setTitle('')
-            setDescription('')
-            setDate('')
-            setError(null)
+            clearState()
         }
+    }
+
+    const clearState = () => {
+        setTitle('')
+        setDescription('')
+        setDate(new Date())
+        setError(null)
     }
 
     return (
@@ -57,7 +69,11 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
                             <h5 className="font-semibold">
                                 Update Reminder
                             </h5>
-                            <button type="button" className="p-1 ml-auto bg-transparent border-0 float-right leading-none font-semibold outline-none focus:outline-none" onClick={() => setOpenReminderUpdate(false)}>
+                            <button type="button" className="p-1 ml-auto bg-transparent border-0 float-right leading-none font-semibold outline-none focus:outline-none"
+                                onClick={() => {
+                                    setOpenReminderUpdate(false)
+                                    clearState()
+                                }}>
                                 <span className="bg-transparent block outline-none focus:outline-none">
                                     ×
                                 </span>
@@ -74,7 +90,7 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
                                         id="title-input"
                                         placeholder="Please enter a title..."
                                         onChange={(e) => setTitle(e.target.value)}
-                                        defaultValue={selectedReminder && selectedReminder.title}
+                                        defaultValue={title}
                                     />
                                     <div className="flex justify-between items-center">
                                         <label htmlFor="description-input" className="block text-xl text-[var(--primary-dark)] font-semibold mb-2 dark:text-[var(--primary-light)]">Description</label>
@@ -85,28 +101,24 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
                                         id="description-input"
                                         placeholder="Please enter a description..."
                                         onChange={(e) => setDescription(e.target.value)}
-                                        defaultValue={selectedReminder && selectedReminder.description}
+                                        defaultValue={description}
                                     />
                                     <div>
                                         <label htmlFor="date-input" className="block text-xl font-semibold mb-2 text-[var(--primary-dark)] dark:text-[var(--primary-light)]">Date and Time</label>
                                         <div className="relative">
-                                            <Flatpickr
-                                                id="date-input"
-                                                className="cursor-pointer"
-                                                placeholder="Please select a date..."
-                                                options={{
-                                                    altInput: true,
-                                                    altFormat: "F j, Y, H:i",
-                                                    dateFormat: "Y-m-d H:i",
-                                                    enableTime: true,
-                                                    time_24hr: true
+                                            <DateTimePicker
+                                                className="date-time !mb-6"
+                                                value={parseJSON(date) || ''}
+                                                onChange={(newDate) => {
+                                                    setDate(newDate)
                                                 }}
-                                                onChange={(selectedDates) => setDate(selectedDates[0])}
-                                                value={selectedReminder && selectedReminder.date}
+                                                viewRenderers={{
+                                                    hours: renderTimeViewClock,
+                                                    minutes: renderTimeViewClock,
+                                                    seconds: renderTimeViewClock,
+                                                }}
+                                                format="MMM dd yyyy, h:mm aa"
                                             />
-                                            <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
-                                                <FaRegCalendarAlt size={22} className="text-[var(--primary-dark)] dark:text-[var(--primary-light)]" />
-                                            </div>
                                         </div>
                                     </div>
 
@@ -115,7 +127,10 @@ const ReminderUpdate = ({ reminderId, setOpenReminderUpdate }) => {
                             <div className="w-full flex items-center justify-end p-6 border-t border-solid text-[var(--primary-dark)] dark:text-[var(--primary-light)]">
                                 <button
                                     type="button"
-                                    onClick={() => setOpenReminderUpdate(false)}
+                                    onClick={() => {
+                                        setOpenReminderUpdate(false)
+                                        clearState()
+                                    }}
                                     className="border rounded border-[var(--primary-dark)] text-[var(--primary-dark)] hover:bg-[#d8dce0] dark:border-[var(--secondary-dark)] dark:text-[var(--primary-light)] dark:hover:bg-[var(--primary-dark)] background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                 >
                                     Close

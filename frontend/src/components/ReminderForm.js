@@ -1,14 +1,13 @@
 import { useState } from 'react'
-import 'flatpickr/dist/themes/dark.css'
-import Flatpickr from 'react-flatpickr'
-import { FaRegCalendarAlt } from 'react-icons/fa'
 import { useRemindersContext } from '../hooks/useRemindersContext'
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker'
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers'
 
 const ReminderForm = () => {
     const { dispatch } = useRemindersContext()
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
-    const [date, setDate] = useState('')
+    const [date, setDate] = useState(new Date())
     const [error, setError] = useState(null)
     const [emptyFields, setEmptyFields] = useState([])
 
@@ -35,7 +34,7 @@ const ReminderForm = () => {
         if (response.ok) {
             setTitle('')
             setDescription('')
-            setDate('')
+            setDate(new Date())
             setError(null)
             setEmptyFields([])
             dispatch({ type: 'CREATE_REMINDER', payload: json })
@@ -71,25 +70,17 @@ const ReminderForm = () => {
                     <div>
                         <label htmlFor="date-input" className="block text-xl font-semibold mb-2 text-[var(--primary-dark)] dark:text-[var(--primary-light)]">Date and Time</label>
                         <div className="relative">
-                            <Flatpickr
-                                id="date-input"
-                                className="cursor-pointer"
-                                placeholder="Please select a date..."
-                                options={{
-                                    altInput: true,
-                                    altFormat: "F j, Y, H:i",
-                                    dateFormat: "Y-m-d H:i",
-                                    enableTime: true,
-                                    time_24hr: true
+                            <DateTimePicker
+                                className="date-time !mb-6"
+                                value={date || ''}
+                                onChange={(newDate) => setDate(newDate)}
+                                viewRenderers={{
+                                    hours: renderTimeViewClock,
+                                    minutes: renderTimeViewClock,
+                                    seconds: renderTimeViewClock,
                                 }}
-                                onChange={(selectedDates) => {
-                                    setDate(selectedDates[0])
-                                }}
-                                value={date}
+                                format="MMM dd yyyy, h:mm aa"
                             />
-                            <div className="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
-                                <FaRegCalendarAlt size={22} className="text-[var(--primary-dark)] dark:text-[var(--primary-light)]" />
-                            </div>
                         </div>
                     </div>
                     <button className="px-8 py-3 mb-4 text-sm md:text-base font-semibold border rounded transition-all border-[var(--primary-dark)] text-[var(--primary-dark)] hover:bg-[#d8dce0] dark:border-[var(--primary-light)] dark:text-[var(--primary-light)] dark:hover:bg-[var(--primary-dark)]">Add reminder</button>
